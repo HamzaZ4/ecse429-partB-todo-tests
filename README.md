@@ -33,7 +33,7 @@ Needs Python 3.11+, Java, and port 4567 free. The application jar is not in the 
   each run. `pytest -v -p randomly --randomly-seed=1234` replays an order, and
   `pytest -v -p no:randomly` runs them in file order.
 * A story: `pytest tests/test_add_todo.py -v`.
-* Expected result: 34 tests, 32 passed and 2 xfailed (the known bugs below).
+* Expected result: 35 tests, 32 passed and 3 xfailed (the bugs below).
 
 ## How a scenario runs
 
@@ -47,9 +47,10 @@ Needs Python 3.11+, Java, and port 4567 free. The application jar is not in the 
   happened to the data. The step "the default todos are unchanged" compares the 2 default
   todos with the copy kept in the Background, so an action that also changes another todo
   is caught.
-* **Known bugs.** A scenario tagged `@xfail` describes what the API should do. It fails
-  today and is reported as an expected failure. Once the bug is fixed the
-  scenario passes, pytest reports it as a failure and the tag is removed.
+* **Expected failures.** A scenario tagged `@xfail` describes what the API should do. It
+  fails today because of a bug (see `bugs/`), so pytest reports it as an expected failure.
+  Once the bug is fixed the scenario passes, pytest reports it as xpassed and the tag
+  can be removed.
 
 ## Layout
 
@@ -69,6 +70,7 @@ Needs Python 3.11+, Java, and port 4567 free. The application jar is not in the 
 | Bug | Story | Summary |
 |-----|-------|---------|
 | `bugs/Bug_06_category_todos_list_is_empty.md` | 4 | GET /categories/:id/todos is empty even when todos are in the category |
+| `bugs/Bug_08_deleted_category_still_listed_on_todo.md` | 4 | after DELETE /categories/:id the todos still list the deleted category |
 | `bugs/Bug_07_inconsistent_error_message_wording.md` | 3 | the "todo not found" error is worded differently on GET, PUT, DELETE and POST |
 
 The five bugs found in Part A (`Bug_01` to `Bug_05`) are in the Part A repository.

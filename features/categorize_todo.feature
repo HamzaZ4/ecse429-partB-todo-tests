@@ -1,7 +1,7 @@
 # Story 4 of 5 (ECSE 429 Part B, working alone, todos only)
 # Normal flow, alternate flow and error flow for putting a todo in a category.
-# The last scenario is tagged @xfail: it describes what the API should do,
-# fails today (see bugs/Bug_06) and is reported as an expected failure.
+# The last two scenarios are tagged @xfail: they describe what the API should do,
+# fail today (see bugs/Bug_06 and Bug_08) and are reported as expected failures.
 
 Feature: Put a todo in a category
   As a user
@@ -52,6 +52,17 @@ Feature: Put a todo in a category
     When I view the todos of the category with id <category>
     Then the response status is 200
     And the response includes the todo "<title>"
+
+    Examples:
+      | title          | category |
+      | scan paperwork | 1        |
+
+  @xfail
+  Scenario Outline: Alternate flow - delete a category that has a todo in it
+    Given the default todo "<title>" is in the category with id <category>
+    When I delete the category with id <category>
+    Then the response status is 200
+    And the todo "<title>" does not belong to the category with id <category>
 
     Examples:
       | title          | category |

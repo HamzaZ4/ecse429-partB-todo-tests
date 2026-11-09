@@ -23,6 +23,12 @@ def take_todo_out_of_category(context, title, category_id):
     context.last_response = context.client.delete(f"{context.client.todo_path(todo_id)}/categories/{category_id}")
 
 
+@when(parsers.re(r"I delete the category with id (?P<category_id>\d+)"))
+def delete_category(context, category_id):
+    path = constants.CATEGORY_PATH_TEMPLATE.format(category_id=category_id)
+    context.last_response = context.client.delete(path)
+
+
 @when(parsers.re(r"I view the todos of the category with id (?P<category_id>\d+)"))
 def view_todos_of_category(context, category_id):
     path = constants.CATEGORY_PATH_TEMPLATE.format(category_id=category_id)
